@@ -43,7 +43,7 @@
     'powershell-yaml'            = 'latest'
     # Powershell module for serializing and deserializing YAML
 
-    ProtectedData                = 'latest'
+    ProtectedData                = '4.1.3'
     # Encrypt and share secret data between different users and computers.
 
     PSScriptAnalyzer             = 'latest'
