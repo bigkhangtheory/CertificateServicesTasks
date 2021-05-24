@@ -12,28 +12,28 @@
     # RootModule = ''
 
     # Version number of this module.
-    ModuleVersion     = '0.5.0'
+    ModuleVersion        = '0.5.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
 
     # ID used to uniquely identify this module
-    GUID              = '18440f31-7add-40cf-83b3-a8d4d548aa7f'
+    GUID                 = '18440f31-7add-40cf-83b3-a8d4d548aa7f'
 
     # Author of this module
-    Author            = 'Khang M. Nguyen'
+    Author               = 'Khang M. Nguyen'
 
     # Company or vendor of this module
-    CompanyName       = 'MAP Communications, Inc.'
+    CompanyName          = 'MAP Communications, Inc.'
 
     # Copyright statement for this module
-    Copyright         = '(c) Khang M. Nguyen. All rights reserved.'
+    Copyright            = '(c) Khang M. Nguyen. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description       = 'Re-usable and composable DSC Composite Resources (Configurations) for configuring and managing Active Directory Certificate Services.'
+    Description          = 'Re-usable and composable DSC Composite Resources (Configurations) for configuring and managing Active Directory Certificate Services.'
 
     # Minimum version of the PowerShell engine required by this module
-    PowerShellVersion = '5.1'
+    PowerShellVersion    = '5.1'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
@@ -69,19 +69,19 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = @()
+    FunctionsToExport    = @()
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-    CmdletsToExport   = @()
+    CmdletsToExport      = @()
 
     # Variables to export from this module
-    VariablesToExport = '*'
+    VariablesToExport    = '*'
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-    AliasesToExport   = @()
+    AliasesToExport      = @()
 
     # DSC resources to export from this module
-    # DscResourcesToExport = @()
+    DscResourcesToExport = @('*')
 
     # List of all modules packaged with this module
     # ModuleList = @()
@@ -90,12 +90,12 @@
     # FileList = @()
 
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
-    PrivateData       = @{
+    PrivateData          = @{
 
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            # Tags = @()
+            Tags                       = @('powershell', 'dsc', 'composite resource', 'configuration', 'active directory', 'certificate services')
 
             # A URL to the license for this module.
             # LicenseUri = ''
