@@ -58,4 +58,7 @@
     
     ActiveDirectoryCSDsc         = '5.0.0'
     # DSC resources for installing, uninstalling and configuring Certificate Services components in Windows Server
+
+    xPSDesiredStateConfiguration = '9.1.0'
+    # DSC resources for configuring common operating systems features, files and settings.
 }
