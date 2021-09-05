@@ -19,7 +19,7 @@
     Datum                        = '0.39.0'
     # Module to manage Hierachical Configuration Data
 
-    'Datum.InvokeCommand'       = '0.1.2'
+    'Datum.InvokeCommand'        = '0.1.2'
     # Datum Handler module to encrypt and decrypt secrets in Datum using Dave Wyatt's ProtectedData module
 
     'Datum.ProtectedData'        = 'latest'
@@ -28,7 +28,7 @@
     DscBuildHelpers              = 'latest'
     # Build Helpers for DSC Resources and Configurations
 
-    InvokeBuild                  = 'latest'
+    InvokeBuild                  = '5.8.4'
     # Build and test automation in PowerShell
 
     Pester                       = '4.10.1'

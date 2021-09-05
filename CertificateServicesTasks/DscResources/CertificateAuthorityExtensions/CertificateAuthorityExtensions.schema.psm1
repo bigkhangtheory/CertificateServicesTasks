@@ -1,9 +1,9 @@
 <#
     .DESCRIPTION
         This DSC configuration is used to configure the URIs in the Authority Information Access and Online Responder OCSP extensions of certificates issued by an Active Directory Certificate Authority.
-    .PARAMETER AIA
+    .PARAMETER AuthorityInformationAccess
         Specifies the list of URIs that should be included in the AIA extension of the issued certificate.
-    .PARAMETER OCSP
+    .PARAMETER OnlineResponderOCSP
         Specifies the list of URIs that should be included in the Online Responder OCSP extension of the issued certificate.
     .PARAMETER AllowServiceRestart
         Allows the Certificate Authority service to be restarted if changes are made. Defaults to false.
@@ -11,7 +11,8 @@
 #Requires -Module ActiveDirectoryCSDsc
 #Requires -Module xPSDesiredStateConfiguration
 
-configuration CertificateExtensions
+
+configuration CertificateAuthorityExtensions
 {
     param
     (
@@ -30,7 +31,7 @@ configuration CertificateExtensions
             }
         )]
         [System.String[]]
-        $AIA,
+        $AuthorityInformationAccess,
 
         [Parameter()]
         [ValidateNotNullOrEmpty()]
@@ -47,7 +48,7 @@ configuration CertificateExtensions
             }
         )]
         [System.String[]]
-        $OCSP,
+        $OnlineResponderOCSP,
 
         [Parameter()]
         [ValidateNotNullOrEmpty()]
@@ -58,8 +59,8 @@ configuration CertificateExtensions
     <#
         Import required modules
     #>
-    Import-DscResource -Module xPSDesiredStateConfiguration
-    Import-DscResource -Module ActiveDirectoryCSDsc
+    Import-DscResource -ModuleName xPSDesiredStateConfiguration
+    Import-DscResource -ModuleName ActiveDirectoryCSDsc
 
 
     <#
@@ -74,29 +75,29 @@ configuration CertificateExtensions
     <#
         Create DSC resource for AIA and OSCP URIs
     #>
-    $myExtensions = @{
+    $properties = @{
         IsSingleInstance    = 'Yes'
         AllowRestartService = $AllowRestartService
         DependsOn           = '[xWindowsFeature]AddAdcsCertAuthority'
     }
 
     # if specified, add list of URIs to be included in the AIA extension
-    if ($AIA)
+    if ($AuthorityInformationAccess)
     {
-        $myExtensions.AiaUri = @() + $AIA
+        $properties.AiaUri = @() + $AuthorityInformationAccess
     }
 
     # if specified, add list of URIs to be included in the Online Responder OCSP extension
-    if ($OCSP)
+    if ($OnlineResponderOCSP)
     {
-        $myExtensions.OcspUri = @() + $OCSP
+        $properties.OcspUri = @() + $OnlineResponderOCSP
     }
 
     $Splatting = @{
         ResourceName  = 'AdcsAuthorityInformationAccess'
-        ExecutionName = 'Set_AIA_OCSP'
-        Properties    = $myExtensions
+        ExecutionName = 'Set_AIA_Extensions'
+        Properties    = $properties
         NoInvoke      = $true
     }
-    (Get-DscSplattedResource @Splatting).Invoke($myExtensions)
+    (Get-DscSplattedResource @Splatting).Invoke($properties)
 } #end configuration

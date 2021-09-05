@@ -51,7 +51,14 @@
         Validity period of the certification authority certificate.
         
         If this is a subordinate CA, do not specify this parameter because the validity period is determined by the parent CA.
+    .LINK
+        https://github.com/dsccommunity/ActiveDirectoryCSDsc/wiki/AdcsCertificationAuthority
+    .NOTES
+        Author:     Khang M. Nguyen
 #>
+#Requires -Module ActiveDirectoryCSDsc
+
+
 configuration CertificateAuthorities {
     param
     (
@@ -61,6 +68,7 @@ configuration CertificateAuthorities {
         $CAType,
 
         [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]
         [System.Management.Automation.Credential()]
         $Credential,
@@ -71,48 +79,74 @@ configuration CertificateAuthorities {
         $Ensure = 'Present',
 
         [Parameter()]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $CACommonName,
 
         [Parameter()]
+        [ValidatePattern('^((DC=[^,]+,?)+)$')]
         [System.String]
         $CADistinguishedNameSuffix,
 
         [Parameter()]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $CertFile,
 
         [Parameter()]
+        [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]
         $CertFilePassword,
 
         [Parameter()]
+        [ValidateNotNullOrEmpty()]
         [System.String]
         $CertificateID,
 
         [Parameter()]
+        [ValidateSet(
+            'Microsoft Base Smart Card Crypto Provider',
+            'Microsoft Enhanced Cryptographic Provider v1.0',
+            'ECDSA_P256#Microsoft Smart Card Key Storage Provider',
+            'ECDSA_P521#Microsoft Smart Card Key Storage Provider',
+            'RSA#Microsoft Software Key Storage Provider',
+            'Microsoft Base Cryptographic Provider v1.0',
+            'ECDSA_P521#Microsoft Software Key Storage Provider',
+            'ECDSA_P256#Microsoft Software Key Storage Provider',
+            'Microsoft Strong Cryptographic Provider',
+            'ECDSA_P384#Microsoft Software Key Storage Provider',
+            'Microsoft Base DSS Cryptographic Provider',
+            'RSA#Microsoft Smart Card Key Storage Provider',
+            'DSA#Microsoft Software Key Storage Provider',
+            'ECDSA_P384#Microsoft Smart Card Key Storage Provider'
+        )]
         [System.String]
         $CryptoProviderName,
 
         [Parameter()]
-        [System.String]
-        $DatabaseDirectory,
-
-        [Parameter()]
+        [ValidateSet(
+            'SHA256', 'SHA384', 'SHA512', 'SHA1',
+            'MD5', 'MD4', 'MD2'
+        )]
         [System.String]
         $HashAlgorithmName,
 
         [Parameter()]
-        [System.Boolean]
-        $IgnoreUnicode,
+        [ValidateSet( 512, 1024, 2048, 4096 )]
+        [System.UInt32]
+        $KeyLength,
 
         [Parameter()]
         [System.String]
         $KeyContainerName,
 
         [Parameter()]
-        [System.UInt32]
-        $KeyLength,
+        [System.String]
+        $DatabaseDirectory,
+
+        [Parameter()]
+        [System.Boolean]
+        $IgnoreUnicode,
 
         [Parameter()]
         [System.String]
@@ -163,44 +197,79 @@ configuration CertificateAuthorities {
     #>
     xWindowsFeature ADCSCertAuthority
     {
-        Ensure = 'Present'
-        Name   = 'ADCS-Cert-Authority'
+        Ensure     = 'Present'
+        Name       = 'ADCS-Cert-Authority'
+        Credential = $Credential
     }
     xWindowsFeature ADCSCertManagement
     {
-        Ensure    = 'Present'
-        Name      = 'RSAT-ADCS-Mgmt'
-        DependsOn = '[xWindowsFeature]ADCSCertAuthority'
+        Ensure     = 'Present'
+        Name       = 'RSAT-ADCS-Mgmt'
+        Credential = $Credential
+        DependsOn  = '[xWindowsFeature]ADCSCertAuthority'
     }
     
+    <#
+        Parameters for DSC resource 'AdcsCertificationAuthority'
+    #>
+    $adcsCertificationAuthority = @(
+        'CAType',
+        'Credential',
+        'Ensure',
+        'CACommonName',
+        'CADistinguishedNameSuffix',
+        'CertFile',
+        'CertFilePassword',
+        'CertificateID'
+        'CryptoProviderName',
+        'DatabaseDirectory',
+        'HashAlgorithmName',
+        'IgnoreUnicode',
+        'KeyContainerName',
+        'KeyLength',
+        'LogDirectory',
+        'OutputCertRequestFile',
+        'OverwriteExistingCAinDS',
+        'OverwriteExistingDatabase',
+        'OverwriteExistingKey',
+        'ParentCA',
+        'ValidityPeriod',
+        'ValidityPeriodUnits'
+    )
 
     <#
         Create DSC resource for Certificate Authority
     #>
 
-    # if not specified, ensure 'Present'
-    if (-not $PSBoundParameters.ContainsKey('Ensure'))
+    # store matching parameters into hashtable
+    $properties = New-Object -TypeName System.Collections.Hashtable
+    
+    # enumerate script parameters, add matches to hashtable
+    foreach ($item in ($PSBoundParameters.GetEnumerator() | Where-Object -Property Key -In -Value $adcsCertificationAuthority))
     {
-        $PSBoundParameters.Add('Ensure', 'Present')
+        $properties.Add($item.Key, $item.Value)
+    }
+
+    # if not specified, ensure 'Present'
+    if (-not $properties.ContainsKey('Ensure'))
+    {
+        $properties.Ensure = 'Present'
     }
 
     # add required parameters
-    $PSBoundParameters.Add('IsSingleInstance', 'Yes')
-
-    $PSBoundParameters.Remove('InstanceName')
-    $PSBoundParameters.Remove('AdvancedSettings')
+    $properties.IsSingleInstance = 'Yes'
 
     # this resource depends on installation of Certificate Authority
-    #$PSBoundParameters.Add('DependsOn', '[xWindowsFeature]ADCSCertAuthority')
+    $properties.DependsOn = '[xWindowsFeature]ADCSCertAuthority'
 
     # create resource
     $Splatting = @{
         ResourceName  = 'AdcsCertificationAuthority'
         ExecutionName = "CA_$CAType"
-        Properties    = $PSBoundParameters
+        Properties    = $properties
         NoInvoke      = $true
     }
-    (Get-DscSplattedResource @Splatting).Invoke($PSBoundParameters)
+    (Get-DscSplattedResource @Splatting).Invoke($properties)
 
 
     <#
