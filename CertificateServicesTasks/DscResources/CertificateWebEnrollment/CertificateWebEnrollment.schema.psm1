@@ -55,9 +55,8 @@ configuration CertificateWebEnrollment
     #>
     xWindowsFeature AddAdcsWebEnrollment
     {
-        Name       = 'ADCS-Web-Enrollment'
-        Ensure     = 'Present'
-        Credential = $Credential
+        Name   = 'ADCS-Web-Enrollment'
+        Ensure = 'Present'
     }
 
 

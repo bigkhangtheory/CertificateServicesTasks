@@ -195,18 +195,16 @@ configuration CertificateAuthorities {
     <#
         Install required features
     #>
-    xWindowsFeature ADCSCertAuthority
+    xWindowsFeature AddAdcsCertAuthority
     {
-        Ensure     = 'Present'
-        Name       = 'ADCS-Cert-Authority'
-        Credential = $Credential
+        Ensure = 'Present'
+        Name   = 'ADCS-Cert-Authority'
     }
-    xWindowsFeature ADCSCertManagement
+    xWindowsFeature AddAdcsCertManagement
     {
-        Ensure     = 'Present'
-        Name       = 'RSAT-ADCS-Mgmt'
-        Credential = $Credential
-        DependsOn  = '[xWindowsFeature]ADCSCertAuthority'
+        Ensure    = 'Present'
+        Name      = 'RSAT-ADCS-Mgmt'
+        DependsOn = '[xWindowsFeature]ADCSCertAuthority'
     }
     
     <#
@@ -260,7 +258,7 @@ configuration CertificateAuthorities {
     $properties.IsSingleInstance = 'Yes'
 
     # this resource depends on installation of Certificate Authority
-    $properties.DependsOn = '[xWindowsFeature]ADCSCertAuthority'
+    $properties.DependsOn = '[xWindowsFeature]AddAdcsCertAuthority'
 
     # create resource
     $Splatting = @{

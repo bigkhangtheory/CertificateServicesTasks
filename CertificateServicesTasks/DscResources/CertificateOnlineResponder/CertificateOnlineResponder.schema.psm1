@@ -48,7 +48,6 @@ configuration CertificateOnlineResponder
     {
         Name       = 'ADCS-Online-Cert'
         Ensure     = 'Present'
-        Credential = $Credential
     }
 
 
