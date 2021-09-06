@@ -204,7 +204,7 @@ configuration CertificateAuthorities {
     {
         Ensure    = 'Present'
         Name      = 'RSAT-ADCS-Mgmt'
-        DependsOn = '[xWindowsFeature]ADCSCertAuthority'
+        DependsOn = '[xWindowsFeature]AddAdcsCertAuthority'
     }
     
     <#
