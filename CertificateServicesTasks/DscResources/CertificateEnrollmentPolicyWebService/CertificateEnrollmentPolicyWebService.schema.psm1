@@ -34,9 +34,8 @@ configuration CertificateEnrollmentPolicyWebService
         [System.String]
         $SslCertThumbprint,
 
-        [Parameter(Mandatory)]
+        [Parameter()]
         [System.Management.Automation.PSCredential]
-        [System.Management.Automation.Credential()]
         $Credential,
 
         [Parameter()]

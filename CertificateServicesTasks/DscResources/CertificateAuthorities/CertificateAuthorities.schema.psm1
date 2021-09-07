@@ -67,10 +67,9 @@ configuration CertificateAuthorities {
         [System.String]
         $CAType,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter()]
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]
-        [System.Management.Automation.Credential()]
         $Credential,
 
         [Parameter()]

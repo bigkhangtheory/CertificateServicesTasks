@@ -21,10 +21,9 @@ configuration CertificateOnlineResponder
 {
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter()]
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]
-        [System.Management.Automation.Credential()]
         $Credential,
 
         [Parameter()]
@@ -46,8 +45,8 @@ configuration CertificateOnlineResponder
     #>
     xWindowsFeature AddAdcsOnlineCert
     {
-        Name       = 'ADCS-Online-Cert'
-        Ensure     = 'Present'
+        Name   = 'ADCS-Online-Cert'
+        Ensure = 'Present'
     }
 
 

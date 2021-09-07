@@ -30,10 +30,9 @@ configuration CertificateWebEnrollment
         [System.String]
         $CAConfig,
 
-        [Parameter(Mandatory)]
+        [Parameter()]
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]
-        [System.Management.Automation.Credential()]
         $Credential,
 
         [Parameter()]
