@@ -1,0 +1,45 @@
+﻿# Items
+#
+# Specifies a list of CA template names on an Enterprise CA.
+Items:
+  - Name: UserCertificate
+    Ensure: Present
+
+  - Name: RASAndIASServer
+    Ensure: Present
+
+  - Name: CodeSigning20yr
+    Ensure: Present
+
+  - Name: DirectoryEmailReplication
+    Ensure: Present
+
+  - Name: DomainControllerAuthentication
+    Ensure: Present
+
+  - Name: KerberosAuthentication
+    Ensure: Present
+
+  - Name: EFSRecovery
+    Ensure: Present
+
+  - Name: EFS
+    Ensure: Present
+
+  - Name: DomainController
+    Ensure: Present
+
+  - Name: WebServer
+    Ensure: Present
+
+  - Name: Machine
+    Ensure: Present
+
+  - Name: User
+    Ensure: Present
+
+  - Name: SubCA
+    Ensure: Present
+
+  - Name: Administrator
+    Ensure: Present

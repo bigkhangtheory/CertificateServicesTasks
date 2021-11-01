@@ -1,0 +1,26 @@
+Items:
+  # Thumbprint
+  #
+  # The thumbprint (unique identifier) of the certificate you're importing.
+  - Thumbprint: c81b94933420221a7ac004a90242d8b1d3e5070d
+
+    # Path
+    #
+    # The path to the CER file you want to import.
+    Path: \\Server\Share\Certificates\MyTrustedRoot.cer
+
+    # Location
+    #
+    # The Windows Certificate Store Location to import the certificate to.
+    # Allowed values: 'LocalMachine', 'CurrentUser'
+    Location: LocalMachine
+
+    # Store
+    #
+    # The Windows Certificate Store Name to import the certificate to.
+    Store: My
+
+    # FriendlyName
+    #
+    # The friendly name of the certificate to set in the Windows Certificate Store.
+    FriendlyName: My Trusted Root Certificate

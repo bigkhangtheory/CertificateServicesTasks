@@ -1,7 +1,7 @@
 <#
     .DESCRIPTION
         This DSC configuration adds or removes Certificate Authority templates from an Enterprise CA.
-    .PARAMETER Templates
+    .PARAMETER Items
         Specifies a list of CA template names on an Enterprise CA.
     .LINK
         https://github.com/dsccommunity/ActiveDirectoryCSDsc/wiki/AdcsTemplate
@@ -12,46 +12,43 @@
 #Requires -Module ActiveDirectoryCSDsc
 
 
-configuration CertificateTemplates
+configuration CertificatesPublished
 {
     param
     (
-        [Parameter(Mandatory)]
-        [ValidateNotNullOrEmpty()]
+        [Parameter()]
         [System.Collections.Hashtable[]]
-        $Templates
+        $Items
     )
 
     <#
         Import required modules
     #>
     Import-DscResource -ModuleName ActiveDirectoryCSDsc
-    
+
 
     <#
         Create DSC resource for 'AdcsTemplate'
     #>
-    foreach ($t in $Templates)
+    foreach ($i in $Items)
     {
         # remove case sensitivity of ordered Dictionary or Hashtables
-        $t = @{ } + $t
+        $i = @{ } + $i
 
         # if not specified, ensure 'Present'
-        if (-not $t.ContainsKey('Ensure'))
+        if (-not $i.ContainsKey('Ensure'))
         {
-            $t.Ensure = 'Present'
+            $i.Ensure = 'Present'
         }
 
         # create execution name for the resource
-        $executionName = "$($t.Name -replace '[-().:\s]', '_')_$($t.Ensure)"
+        $executionName = "$($i.Name -replace '[-().:\s]', '_')_$($i.Ensure)"
 
         # create DSC resource
-        $Splatting = @{
-            ResourceName  = 'AdcsTemplate'
-            Executionname = $executionName
-            Properties    = $t
-            NoInvoke      = $true
+        AdcsTemplate "$executionName"
+        {
+            Name   = $i.Name
+            Ensure = $i.Ensure
         }
-        (Get-DscSplattedResource @Splatting).Invoke($t)
     } #end foreach
 } #end configuration

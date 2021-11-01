@@ -12,7 +12,7 @@
     # RootModule = ''
 
     # Version number of this module.
-    ModuleVersion        = '2021.9.0'
+    ModuleVersion        = '2021.10.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -24,13 +24,13 @@
     Author               = 'Khang M. Nguyen'
 
     # Company or vendor of this module
-    CompanyName          = 'MAP Communications, Inc.'
+    CompanyName          = '@bigkhangtheory'
 
     # Copyright statement for this module
     Copyright            = '(c) Khang M. Nguyen. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description          = 'Re-usable and composable DSC Composite Resources (Configurations) for configuring and managing Active Directory Certificate Services.'
+    Description          = 'Reusable and composable DSC Composite Resources (Configurations) for configuring and managing Active Directory Certificate Services and certificates on the local target node.'
 
     # Minimum version of the PowerShell engine required by this module
     PowerShellVersion    = '5.1'

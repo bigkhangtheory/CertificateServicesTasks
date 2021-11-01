@@ -45,11 +45,11 @@
         Specifies the configuration string of the parent certification authority that will certify this CA.
     .PARAMETER ValidityPeriod
         Specifies the validity period of the certification authority certificate in hours, days, weeks, months or years.
-        
+
         If this is a subordinate CA, do not use this parameter, because the validity period is determined by the parent CA.
     .PARAMETER ValidityPeriodUnits
         Validity period of the certification authority certificate.
-        
+
         If this is a subordinate CA, do not specify this parameter because the validity period is determined by the parent CA.
     .LINK
         https://github.com/dsccommunity/ActiveDirectoryCSDsc/wiki/AdcsCertificationAuthority
@@ -184,7 +184,7 @@ configuration CertificateAuthorities {
         [System.Collections.Hashtable]
         $AdvancedSettings
     )
-    
+
     <#
         Import required modules
     #>
@@ -199,13 +199,7 @@ configuration CertificateAuthorities {
         Ensure = 'Present'
         Name   = 'ADCS-Cert-Authority'
     }
-    xWindowsFeature AddAdcsCertManagement
-    {
-        Ensure    = 'Present'
-        Name      = 'RSAT-ADCS-Mgmt'
-        DependsOn = '[xWindowsFeature]AddAdcsCertAuthority'
-    }
-    
+
     <#
         Parameters for DSC resource 'AdcsCertificationAuthority'
     #>
@@ -240,7 +234,7 @@ configuration CertificateAuthorities {
 
     # store matching parameters into hashtable
     $properties = New-Object -TypeName System.Collections.Hashtable
-    
+
     # enumerate script parameters, add matches to hashtable
     foreach ($item in ($PSBoundParameters.GetEnumerator() | Where-Object -Property Key -In -Value $adcsCertificationAuthority))
     {

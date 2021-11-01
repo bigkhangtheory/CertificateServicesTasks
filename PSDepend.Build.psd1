@@ -12,14 +12,14 @@
     # -------------------------------------------------------------------------
     # PowerShell Modules
     # -------------------------------------------------------------------------
-    
+
     BuildHelpers                 = 'latest'
     # Helper functions for PowerShell CI/CD scenarios
 
-    Datum                        = '0.39.0'
+    Datum                        = 'latest'
     # Module to manage Hierachical Configuration Data
 
-    'Datum.InvokeCommand'        = '0.1.2'
+    'Datum.InvokeCommand'        = 'latest'
     # Datum Handler module to encrypt and decrypt secrets in Datum using Dave Wyatt's ProtectedData module
 
     'Datum.ProtectedData'        = 'latest'
@@ -28,7 +28,7 @@
     DscBuildHelpers              = 'latest'
     # Build Helpers for DSC Resources and Configurations
 
-    InvokeBuild                  = '5.8.4'
+    InvokeBuild                  = 'latest'
     # Build and test automation in PowerShell
 
     Pester                       = '4.10.1'
@@ -43,7 +43,7 @@
     'powershell-yaml'            = 'latest'
     # Powershell module for serializing and deserializing YAML
 
-    ProtectedData                = '4.1.3'
+    ProtectedData                = 'latest'
     # Encrypt and share secret data between different users and computers.
 
     PSScriptAnalyzer             = 'latest'
@@ -55,9 +55,12 @@
     # -------------------------------------------------------------------------
     # DSC Resources
     # -------------------------------------------------------------------------
-    
+
     ActiveDirectoryCSDsc         = '5.0.0'
     # DSC resources for installing, uninstalling and configuring Certificate Services components in Windows Server
+
+    CertificateDsc               = '5.1.0'
+    # DSC resources for managing certificates on a Windows Server.
 
     xPSDesiredStateConfiguration = '9.1.0'
     # DSC resources for configuring common operating systems features, files and settings.
